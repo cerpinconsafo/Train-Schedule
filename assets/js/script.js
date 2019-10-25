@@ -23,12 +23,16 @@ function addTrainToSchedule(trainObjects) {
         console.log("The current Train is " + currentTrain);
 
         var timeArr = currentTrain["First Train"].split(":");
-        console.log("The timeArr is " + timeArr);
+        console.log("The timeArr[0] is " + timeArr[0] + " and the timeArr[1] is " + timeArr[1]);
+        //console is not showing that the First Train input is being split, it only logs the first 2 digits
 
         var trainTime = moment().hours(timeArr[0]).minutes(timeArr[1]);
         console.log("The train time is " + trainTime);
 
-        var trainMinute = trainTime.get("minutes");
+        var trainMinute;
+        trainMinute = trainTime.get("minutes");
+
+        //console is telling me trainTime.get is not a function
         trainMinute = moment(trainMinute, 'mm');
         var currMinutes = moment().minutes();
         currMinutes = moment(currMinutes, 'mm');
