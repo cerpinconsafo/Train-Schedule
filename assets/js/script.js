@@ -20,21 +20,27 @@ trainScheduleRef.on('value', function(snapshot) {
 function addTrainToSchedule(trainObjects) {
     for (train in trainObjects) {
         var currentTrain = trainObjects[train];
-        console.log(currentTrain);
+        console.log("The current Train is " + currentTrain);
+
         var timeArr = currentTrain["First Train"].split(":");
-        console.log(timeArr);
+        console.log("The timeArr is " + timeArr);
+
         var trainTime = moment().hours(timeArr[0]).minutes(timeArr[1]);
-        console.log(trainTime);
+        console.log("The train time is " + trainTime);
+
         var trainMinute = trainTime.get("minutes");
         trainMinute = moment(trainMinute, 'mm');
         var currMinutes = moment().minutes();
         currMinutes = moment(currMinutes, 'mm');
         console.log(trainMinute);
         console.log(currMinutes);
+
         var minutesAway = trainMinute.diff(currMinutes, "minutes");
         console.log(minutesAway);
+
         var nextTrainTime = moment().add(minutesAway, 'm').format('LT');
         console.log(nextTrainTime);
+
         var newRow = $("<tr>");
         var trainNameData = $("<td>" + currentTrain["Train Name"] + "</td>");
         var trainDestinationData = $("<td>" + currentTrain["Destination"] + "</td>");
