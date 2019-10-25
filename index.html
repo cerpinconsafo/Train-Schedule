@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+    Admin Section
+        1. When adding trains, administrators should be able to submit the following:
+
+            Train Name
+
+            Destination
+
+            First Train Time -- in military time
+
+            Frequency -- in minutes
+
+        2. When the admin submits this data should be added to FireBase 
+
+    Train List Section
+        1. Pull all train schedule information from FireBase and display in the schedule table. 
+
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0-11/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Title</title>
+</head>
+
+
+<body>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container text-center">
+            <h1 class="display-3">The Dreaded Train Scheduler</h1>
+            <p class="lead"></p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                Train Schedule
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Train Name</th>
+                            <th scope="col">Destination</th>
+                            <th scope="col">Frequency</th>
+                            <th scope="col">Next Arrival</th>
+                            <th scope="col">Minutes Away</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                Add Train
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput">Train Name</label>
+                        <input type="text" class="form-control" id="trainName">
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput2">Destination</label>
+                        <input type="text" class="form-control" id="destination">
+                    </div>
+                </form>
+                <form>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput">First Train Time</label>
+                        <input type="text" class="form-control" id="firstTrain" placeholder="0-24">
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput2">Frequency</label>
+                        <input type="text" class="form-control" id="frequency" placeholder="0-60">
+                    </div>
+                    <button class="btn btn-danger" id="add-user" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-database.js"></script>
+    <script src="assets/js/moment.min.js"></script>
+    <script src="assets/js/script.js"></script>
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js "></script>
+</body>
+
+</html>
