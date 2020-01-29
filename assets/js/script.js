@@ -1,81 +1,79 @@
-var firebaseConfig = {
-    apiKey: "AIzaSyAzgvRCDO4i9pPGjWlAaSkPoLO3dk5kihg",
-    authDomain: "train-hw-42d15.firebaseapp.com",
-    databaseURL: "https://train-hw-42d15.firebaseio.com",
-    projectId: "train-hw-42d15",
-    storageBucket: "train-hw-42d15.appspot.com",
-    messagingSenderId: "151334590293",
-    appId: "1:151334590293:web:d38454615fef164081c1dc"
-};
+const firebaseConfig = {
+    apiKey: "AIzaSyBCwyA3vkm_16ojnCg5n7OBKHgZfl6Axe8",
+    authDomain: "train-schedule-fe64d.firebaseapp.com",
+    databaseURL: "https://train-schedule-fe64d.firebaseio.com",
+    projectId: "train-schedule-fe64d",
+    storageBucket: "train-schedule-fe64d.appspot.com",
+    messagingSenderId: "922484995555",
+    appId: "1:922484995555:web:ef60f4bd85e38bd8295cd6"
+  };
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
 
+firebase.initializeApp(firebaseConfig);
 var database = firebase.database();
 
-var trainScheduleRef = firebase.database().ref('/');
-trainScheduleRef.on('value', function(snapshot) {
-    addTrainToSchedule(snapshot.val());
-});
-
-function addTrainToSchedule(trainObjects) {
-    for (train in trainObjects) {
-        var currentTrain = trainObjects[train];
-        console.log("The current Train is " + currentTrain);
-
-        var timeArr = currentTrain["First Train"].split(":");
-        console.log("The timeArr[0] is " + timeArr[0] + " and the timeArr[1] is " + timeArr[1]);
-        //console is not showing that the First Train input is being split, it only logs the first 2 digits
-
-        var trainTime = moment().hours(timeArr[0]).minutes(timeArr[1]);
-        console.log("The train time is " + trainTime);
-
-        var trainMinute;
-        trainMinute = trainTime.get("minutes");
-
-        //console is telling me trainTime.get is not a function
-        trainMinute = moment(trainMinute, 'mm');
-        var currMinutes = moment().minutes();
-        currMinutes = moment(currMinutes, 'mm');
-        console.log(trainMinute);
-        console.log(currMinutes);
-
-        var minutesAway = trainMinute.diff(currMinutes, "minutes");
-        console.log(minutesAway);
-
-        var nextTrainTime = moment().add(minutesAway, 'm').format('LT');
-        console.log(nextTrainTime);
-
-        var newRow = $("<tr>");
-        var trainNameData = $("<td>" + currentTrain["Train Name"] + "</td>");
-        var trainDestinationData = $("<td>" + currentTrain["Destination"] + "</td>");
-        var trainFreqData = $("<td>" + currentTrain["Frequency"] + "</td>");
-
-        var nextTimeForTable = $("<td>" + nextTrainTime + "</td>");
-        var minutesForTable = $("<td>" + minutesAway + "</td>");
-
-        newRow.append(trainNameData);
-        newRow.append(trainDestinationData);
-        newRow.append(trainFreqData);
-        newRow.append(nextTimeForTable);
-        newRow.append(minutesForTable);
-
-        $("tbody").append(newRow);
-    }
-}
+//on click submit info to firebase
 
 $("#add-user").on('click', function(event) {
     event.preventDefault();
 
-    var trainName = $("#trainName").val();
+    var name = $("#name").val();
     var destination = $("#destination").val();
-    var firstTrain = $("#firstTrain").val();
+    var startTime = $("#startTime").val();
     var frequency = $("#frequency").val();
 
     database.ref().push({
-        "Train Name": trainName,
-        "Destination": destination,
-        "First Train": firstTrain,
-        "Frequency": frequency,
+        name : name,
+        destination: destination,
+        startTime: startTime,
+        frequency: frequency,
     });
 
+    $("#name, #destination, #startTime, #frequency").val("");
+ 
+
+    //prevent refresh
+    return false;   
+
 });
+
+
+
+//firebase watcher and intial loader
+
+database.ref().on("child_added", function(childSnapshot){
+    // set snapshot to vars
+
+    var childName = childSnapshot.val().name;
+    var childDestination = childSnapshot.val().destination;
+    var childStartTime = childSnapshot.val().startTime;
+    var childFrequency = childSnapshot.val().frequency;
+
+    console.log(startTime);
+
+    // //create a moment object
+    var minAway;
+    //change the year so the first train comes before now
+    var firstNewTrain = moment(childStartTime, "hh:mm").subtract(1, "years");
+    //difference between the current and first train
+    var diffTime = moment().diff(moment(firstNewTrain), "minutes");
+    var remainder = diffTime % childFrequency;
+    //minutes until next train
+    minAway = childFrequency - remainder;
+    //next train time 
+    var nextTrain = moment().add(minAway, "minutes");
+    nextTrain = moment(nextTrain).format("hh:mm");
+
+    var newRow = `<tr>
+                    <td>${childName}</td>
+                    <td>${childDestination}</td>
+                    <td>${childFrequency}</td>
+                    <td>${nextTrain}</td>
+                    <td>${minAway} minutes away </td>
+    </tr>`
+
+    //append to the table
+
+    $("tbody").append(newRow);
+})
+

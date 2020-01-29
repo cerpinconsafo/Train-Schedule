@@ -1,24 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--
-    Admin Section
-        1. When adding trains, administrators should be able to submit the following:
-
-            Train Name
-
-            Destination
-
-            First Train Time -- in military time
-
-            Frequency -- in minutes
-
-        2. When the admin submits this data should be added to FireBase 
-
-    Train List Section
-        1. Pull all train schedule information from FireBase and display in the schedule table. 
-
--->
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0-11/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <title>Title</title>
+    <title>Train Scheduler Moment.js</title>
 </head>
 
 
@@ -39,12 +20,12 @@
     </div>
     <div class="container">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header lead">
                 Train Schedule
             </div>
             <div class="card-body">
                 <table class="table">
-                    <thead class="thead-light">
+                    <thead class="thead-dark">
                         <tr>
                             <th scope="col">Train Name</th>
                             <th scope="col">Destination</th>
@@ -66,7 +47,7 @@
                 <form>
                     <div class="form-group">
                         <label for="formGroupExampleInput">Train Name</label>
-                        <input type="text" class="form-control" id="trainName">
+                        <input type="text" class="form-control" id="name">
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput2">Destination</label>
@@ -76,7 +57,7 @@
                 <form>
                     <div class="form-group">
                         <label for="formGroupExampleInput">First Train Time</label>
-                        <input type="text" class="form-control" id="firstTrain" placeholder="0-23">
+                        <input type="text" class="form-control" id="startTime" placeholder="0-23">
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput2">Frequency</label>
