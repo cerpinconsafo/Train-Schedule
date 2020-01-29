@@ -62,11 +62,12 @@ database.ref().on("child_added", function(childSnapshot){
     minAway = childFrequency - remainder;
     //next train time 
     var nextTrain = moment().add(minAway, "minutes");
-    nextTrain = moment(nextTrain).format("hh:mm");
+    nextTrain = moment(nextTrain).format("hh:mm a");
 
     var newRow = `<tr>
                     <td>${childName}</td>
                     <td>${childDestination}</td>
+                    <td>${childStartTime} am</td>
                     <td>${childFrequency}</td>
                     <td>${nextTrain}</td>
                     <td>${minAway} minutes away </td>
